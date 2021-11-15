@@ -1,0 +1,18 @@
+<div class="template-dialog">
+  <div class="dialog-header">
+    <h2 class="dialog-header-title" style="margin: 0">
+      {{ title }}
+      <button mat-icon-button color="basic" (click)="dialogRef.close(false)">
+        <mat-icon>close</mat-icon></button
+      >&nbsp;
+    </h2>
+  </div>
+  <div class="dialog-content">
+    <br />
+    <h4 class="error-msg"><mat-icon style="margin: 0">error</mat-icon>&nbsp; {{ confirmMessage }}</h4>
+    <br />
+  </div>
+  <div mat-dialog-actions class="fc-text-right">
+    <button mat-raised-button color="warn" (click)="dialogRef.close(true)">{{ action }}</button>
+  </div>
+</div>

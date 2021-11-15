@@ -1,0 +1,72 @@
+<div class="create-item">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+      <a name="cancel" href="javascript:void(0)" (click)="onCancel()" class="cancle-btn"
+        ><i class="material-icons">add_circle</i></a
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="itemForm" #itemNgForm="ngForm" (ngSubmit)="onSubmit()" class="item-form">
+        <mat-form-field>
+          <input
+            formControlName="name"
+            matInput
+            placeholder="{{ 'EMAIL-EDITOR.DATA-SOURCE.FIELDS.NAME' | translate }}"
+            required
+          />
+          <mat-error *ngIf="!itemForm.get('name').valid && itemForm.get('name').touched">
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field formGroupName="emailTemplate">
+          <mat-label>{{ 'EMAIL-EDITOR.DATA-SOURCE.FIELDS.EMAIL-TEMPLATE' | translate }}</mat-label>
+          <mat-select formControlName="id" required>
+            <mat-option *ngFor="let type of emailTemplates" [value]="type.id">
+              {{ type.templateName }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="!itemForm.get('emailTemplate').valid && itemForm.get('emailTemplate').touched">
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+          >
+        </mat-form-field>
+
+        <div class="sqlEditor">
+          <ngx-codemirror
+            #myEditor
+            required
+            formControlName="sqlQuery"
+            (keyup)="getChangeContent()"
+            (change)="getChangeContent()"
+            [options]="{
+              lineNumbers: true,
+              theme: 'eclipse',
+              mode: 'markdown',
+              mime: 'text/x-pgsql',
+              searchCursor: true,
+              placeholder: translate.instant('EMAIL-EDITOR.DATA-SOURCE.LABELS.SQL-PLACEHOLDER')
+            }"
+          ></ngx-codemirror>
+        </div>
+
+        <mat-error *ngIf="showMessage">{{ errorMessage }}</mat-error>
+        <mat-error *ngIf="!itemForm.get('sqlQuery').valid && itemForm.get('sqlQuery').touched">
+          {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+        >
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="fc-text-right">
+      <button mat-raised-button [disabled]="itemForm.get('sqlQuery').invalid" (click)="previewData()" type="button">
+        {{ 'EMAIL-GENERAL.ACTIONS.EXECUTE' | translate }}
+      </button>
+      <button
+        mat-raised-button
+        (click)="itemNgForm.ngSubmit.emit()"
+        [disabled]="!itemForm.valid || !IsCreatePermission || loading || !previewAvailable"
+      >
+        {{ 'EMAIL-GENERAL.ACTIONS.SAVE' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

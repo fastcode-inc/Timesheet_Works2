@@ -1,0 +1,11 @@
+      <mj-section
+        css-class="%1$s"
+        border="%2$s"       
+        text-align="center"
+        padding="%3$s"
+        background-color="%4$s"
+        background-url="%5$s"
+        background-repeat="%6$s"
+        background-size="%7$s">
+        %8$s
+      </mj-section>

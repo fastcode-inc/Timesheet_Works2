@@ -1,0 +1,184 @@
+<div class="create-item">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+      <a name="cancel" href="javascript:void(0)" (click)="onCancel()" class="cancle-btn"
+        ><i class="material-icons">add_circle</i></a
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="itemForm" #itemNgForm="ngForm" (ngSubmit)="onSubmit()" class="item-form">
+        <mat-form-field>
+          <input
+            formControlName="propertyName"
+            matInput
+            placeholder="{{ 'EMAIL-EDITOR.EMAIL-VARIABLE.FIELDS.PROPERTY-NAME' | translate }}"
+            required
+          />
+          <mat-error *ngIf="!itemForm.get('propertyName').valid && itemForm.get('propertyName').touched">
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ 'EMAIL-EDITOR.EMAIL-VARIABLE.FIELDS.PROPERTY-TYPE' | translate }}</mat-label>
+          <mat-select (selectionChange)="getSelectedVariableType($event)" formControlName="propertyType" required>
+            <mat-option *ngFor="let type of emailVariableType" [value]="type.variableType">
+              {{ type.variableType }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!itemForm.get('propertyType').valid && itemForm.get('propertyType').touched">{{
+            'EMAIL-GENERAL.ERRORS.REQUIRED' | translate
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="showDropDown">
+          <mat-label>{{ dropDownLabel }}</mat-label>
+          <mat-select (selectionChange)="dropDownValueChanged($event)" formControlName="mergeType" required>
+            <mat-option *ngFor="let dropdown of dropdownValues" [value]="dropdown.value">
+              {{ dropdown.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!itemForm.get('mergeType').valid && itemForm.get('mergeType').touched">{{
+            'EMAIL-GENERAL.ERRORS.REQUIRED' | translate
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="showLink">
+          <input formControlName="mergeType" matInput placeholder="Enter Link" required />
+          <mat-error *ngIf="!itemForm.get('mergeType').valid && itemForm.get('mergeType').touched">{{
+            'EMAIL-GENERAL.ERRORS.REQUIRED' | translate
+          }}</mat-error>
+        </mat-form-field>
+        <!-- <mat-form-field > -->
+        <international-phone-number
+          *ngIf="showPhone"
+          formControlName="defaultValue"
+          placeholder="Enter phone number"
+          [maxlength]="20"
+          [defaultCountry]="'sg'"
+          [required]="true"
+        ></international-phone-number>
+        <mat-error *ngIf="showPhone && !itemForm.get('defaultValue').valid && itemForm.get('defaultValue').touched">{{
+          'EMAIL-GENERAL.ERRORS.REQUIRED' | translate
+        }}</mat-error>
+        <!-- </mat-form-field> -->
+
+        <mat-form-field *ngIf="showDecimalDropDown">
+          <mat-label>{{ 'EMAIL-EDITOR.EMAIL-VARIABLE.FIELDS.SELECT-DECIMAL' | translate }}</mat-label>
+          <mat-select (selectionChange)="decimalDropDownChange($event)" formControlName="mergeType" required>
+            <mat-option *ngFor="let dropdown of decimalDropDown" [value]="dropdown">
+              {{ dropdown }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!itemForm.get('defaultValue').valid && itemForm.get('defaultValue').touched">{{
+            'EMAIL-GENERAL.ERRORS.REQUIRED' | translate
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="showInput">
+          <input formControlName="defaultValue" matInput [placeholder]="placeHolderValue" required />
+          <mat-error *ngIf="!itemForm.get('defaultValue').valid && itemForm.get('defaultValue').touched">{{
+            'EMAIL-GENERAL.ERRORS.REQUIRED' | translate
+          }}</mat-error>
+        </mat-form-field>
+        <button
+          type="button"
+          name="Add New"
+          *ngIf="showListButtonAndText"
+          mat-raised-button
+          color="primary"
+          (click)="addNewItem()"
+        >
+          {{ 'EMAIL-EDITOR.EMAIL-VARIABLE.FIELDS.ADD-NEW' | translate }}
+        </button>
+
+        <div class="row" *ngIf="showListButtonAndText">
+          <ul *ngIf="selectedDropDownValue == 'Bullet Verticle List'">
+            <li class="list" *ngFor="let item of listData; let i = index">
+              {{ item }}
+              <span class="button_group">
+                <button mat-icon-button color="warn" type="button" (click)="removeListItem(i)">
+                  <mat-icon attr.aria-label="{{ 'EMAIL-BUILDER.STRUCTURE.REMOVE-ARIA-LABEL' | translate }}"
+                    >delete_forever
+                  </mat-icon>
+                </button>
+              </span>
+            </li>
+          </ul>
+          <ol type="1" *ngIf="selectedDropDownValue == 'Numbered Vertical List'">
+            <li class="list" *ngFor="let item of listData; let i = index">
+              {{ item }}
+              <span class="button_group">
+                <button mat-icon-button color="warn" type="button" (click)="removeListItem(i)">
+                  <mat-icon attr.aria-label="{{ 'EMAIL-BUILDER.STRUCTURE.REMOVE-ARIA-LABEL' | translate }}"
+                    >delete_forever
+                  </mat-icon>
+                </button>
+              </span>
+            </li>
+          </ol>
+          <p *ngIf="selectedDropDownValue == 'Comma Seperated'">{{ listData.join(', ') }}</p>
+        </div>
+
+        <!-- <mat-form-field > -->
+        <input
+          *ngIf="showImage"
+          formControlName="defaultValue"
+          type="file"
+          (change)="readURL($event)"
+          placeholder="{{ 'EMAIL-EDITOR.EMAIL-VARIABLE.FIELDS.DEFAULT-VALUE' | translate }}"
+          required
+        />
+        <!-- <mat-error *ngIf="!itemForm.get('defaultValue').valid && itemForm.get('defaultValue').touched">{{'EMAIL-GENERAL.ERRORS.REQUIRED' | translate}}</mat-error> -->
+        <!-- </mat-form-field>  -->
+        <div class="imageArray" *ngIf="showImage">
+          <span
+            class="img"
+            [ngStyle]="{ display: selectedDropDownValue == 'Horizontal' ? 'inline-block' : 'table' }"
+            *ngFor="let attch of attatchment; let i = index"
+          >
+            <img width="200" height="200" [src]="attch.url" style="padding: 10px" /> <br />
+            <span class="button_group" *ngIf="attatchment.length > 1">
+              <button mat-icon-button type="button" color="warn" (click)="removeImage(i)">
+                <mat-icon attr.aria-label="{{ 'EMAIL-BUILDER.STRUCTURE.REMOVE-ARIA-LABEL' | translate }}"
+                  >delete_forever
+                </mat-icon>
+              </button>
+            </span>
+          </span>
+        </div>
+        <mat-form-field *ngIf="showTextArea">
+          <textarea
+            formControlName="defaultValue"
+            matInput
+            placeholder="{{ 'EMAIL-EDITOR.EMAIL-VARIABLE.FIELDS.DEFAULT-VALUE' | translate }}"
+            required
+          >
+          </textarea>
+          <mat-error *ngIf="!itemForm.get('defaultValue').valid && itemForm.get('defaultValue').touched">{{
+            'EMAIL-GENERAL.ERRORS.REQUIRED' | translate
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="showDatePicker" class="full-width">
+          <input
+            formControlName="defaultValue"
+            matInput
+            [matDatepicker]="startDatePicker"
+            placeholder="{{ 'EMAIL-EDITOR.EMAIL-VARIABLE.FIELDS.SELECT-DATE' | translate }}"
+          />
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="fc-text-right">
+      <button
+        mat-raised-button
+        (click)="itemNgForm.ngSubmit.emit()"
+        [disabled]="!itemForm.valid || !IsCreatePermission || loading"
+      >
+        {{ 'EMAIL-GENERAL.ACTIONS.SAVE' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

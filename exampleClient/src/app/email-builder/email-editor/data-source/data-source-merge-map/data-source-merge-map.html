@@ -1,0 +1,82 @@
+<div class="create-item">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{title}}</mat-card-title>
+      <a name="cancel" href="javascript:void(0)" (click)="onCancel()" class="cancle-btn"
+        ><i class="material-icons">add_circle</i></a
+      >
+    </mat-card-header>
+
+    <mat-card-content>
+      <br />
+
+      <mat-table #table [dataSource]="data.data" class="mat-elevation-z8">
+        <ng-container matColumnDef="Merge Field">
+          <mat-header-cell *matHeaderCellDef
+            >{{'EMAIL-EDITOR.DATA-SOURCE.MERGE-MAP.FIELDS.MERGE-FIELD' | translate}}</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element "> {{ element.mergeField.propertyName }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Meta List">
+          <mat-header-cell *matHeaderCellDef
+            >{{'EMAIL-EDITOR.DATA-SOURCE.MERGE-MAP.FIELDS.DATASOURCE-FIELD' | translate}}</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element ">
+            <!-- {{ element.mergeField.propertyName }} -->
+            <mat-select
+              class="merge_map_select"
+              *ngIf="element.dataSourceMetaList && element.dataSourceMetaList.length > 0"
+              (selectionChange)="dropDownValueChanged($event,element)"
+              required
+            >
+              <mat-option *ngFor="let dropdown of element.dataSourceMetaList" [value]="dropdown">
+                {{ dropdown.dataSourceEntity.name }}.{{ dropdown.metaColumn }}
+              </mat-option>
+            </mat-select>
+            <p *ngIf="!element.dataSourceMetaList || element.dataSourceMetaList.length == 0">
+              {{'EMAIL-EDITOR.DATA-SOURCE.MERGE-MAP.BLANK' | translate}}
+            </p>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Already Mapped">
+          <mat-header-cell *matHeaderCellDef
+            >{{'EMAIL-EDITOR.DATA-SOURCE.MERGE-MAP.FIELDS.MAPPING' | translate}}</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element ">
+            <ul class="lst" *ngIf="element.alreadyMappedList && element.alreadyMappedList.length>0">
+              <li class="lst_item" *ngFor="let item of element.alreadyMappedList">
+                {{ item.dataSourceEntity.name }}.{{ item.metaColumn }}
+                <span>
+                  <button
+                    class="delBtn"
+                    mat-icon-button
+                    color="warn"
+                    aria-label="Example icon-button with a heart icon text-dangger"
+                    matTooltip="{{'EMAIL-GENERAL.ACTIONS.DELETE' | translate}}"
+                    (click)="removeAlreadyAddedMap(item,element)"
+                  >
+                    <mat-icon color="warn">delete</mat-icon>
+                  </button>
+                </span>
+              </li>
+            </ul>
+            <p *ngIf="!element.alreadyMappedList || element.alreadyMappedList.length == 0">
+              {{'EMAIL-EDITOR.DATA-SOURCE.MERGE-MAP.BLANK' | translate}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-card-content>
+    <mat-card-actions class="fc-text-right">
+      <button mat-raised-button (click)="onCancel()" type="button">
+        {{'EMAIL-GENERAL.ACTIONS.CANCEL' | translate}}
+      </button>
+      <button mat-raised-button (click)="save()" type="button">
+        {{'EMAIL-EDITOR.DATA-SOURCE.MERGE-MAP.SAVE-MAP' | translate}}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

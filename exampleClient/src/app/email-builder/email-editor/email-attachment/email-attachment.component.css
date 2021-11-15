@@ -1,0 +1,62 @@
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 0px;
+}
+
+.left {
+  width: 20%;
+  min-width: 230px;
+}
+
+.middle {
+  width: 25%;
+  min-width: 300px;
+}
+
+.right {
+  width: 25%;
+  min-width: 50px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.close {
+  width: 10px;
+  height: 10px;
+  cursor: grabbing;
+}
+
+.file {
+  width: 50px;
+}
+
+.text-level {
+  font-size: medium;
+  font: caption;
+  color: #696969;
+}
+
+li {
+  margin: 10px;
+}
+
+.attatched_file:hover .del_btn {
+  display: inline-block;
+}
+.del_btn {
+  display: none;
+}
+.addIcon {
+  width: 14px;
+  height: 14px;
+  line-height: 0;
+}
+.del_btn mat-icon {
+  font-size: 14px;
+}

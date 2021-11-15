@@ -1,0 +1,83 @@
+<section class="spinner-container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</section>
+<div *ngIf="user" class="list-container">
+  <div class="mate-container">
+    <div class="card-container">
+      <div class="top-breadcrumb center-container">
+        <h1 class="template-title">{{ title }}</h1>
+      </div>
+      <mat-card class="center-container">
+        <mat-card-content>
+          <form [formGroup]="userForm" #itemNgForm="ngForm" (ngSubmit)="onSubmit()" class="item-form">
+            <mat-form-field>
+              <input formControlName="emailaddress" matInput placeholder="Enter emailaddress" />
+              <mat-error *ngIf="!userForm.get('emailaddress').valid && userForm.get('emailaddress').touched">{{
+                'GENERAL.ERRORS.REQUIRED' | translate
+              }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input formControlName="firstname" matInput placeholder="Enter firstname" />
+              <mat-error *ngIf="!userForm.get('firstname').valid && userForm.get('firstname').touched">{{
+                'GENERAL.ERRORS.REQUIRED' | translate
+              }}</mat-error>
+            </mat-form-field>
+
+            <div class="checkbox-container">
+              <mat-checkbox formControlName="isemailconfirmed">isemailconfirmed</mat-checkbox>
+            </div>
+
+            <mat-form-field>
+              <input
+                formControlName="joinDate"
+                matInput
+                [matDatepicker]="joinDatePicker"
+                placeholder="Enter joinDate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="joinDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #joinDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input formControlName="lastname" matInput placeholder="Enter lastname" />
+              <mat-error *ngIf="!userForm.get('lastname').valid && userForm.get('lastname').touched">{{
+                'GENERAL.ERRORS.REQUIRED' | translate
+              }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input formControlName="username" matInput placeholder="Enter username" />
+              <mat-error *ngIf="!userForm.get('username').valid && userForm.get('username').touched">{{
+                'GENERAL.ERRORS.REQUIRED' | translate
+              }}</mat-error>
+            </mat-form-field>
+          </form>
+          <br />
+          <br />
+          <div class="association-div full-width">
+            <div class="fc-row">
+              <div class="fc-col-sm-6"></div>
+              <div class="fc-col-sm-6 fc-text-right">
+                <button name="back" mat-raised-button color="basic" (click)="onBack()">
+                  {{ 'GENERAL.ACTIONS.CANCEL' | translate }}
+                </button>
+                <button
+                  name="save"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="!userForm.valid || loading"
+                  (click)="itemNgForm.ngSubmit.emit()"
+                >
+                  {{ 'GENERAL.ACTIONS.SAVE' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+          <br />
+          <br />
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

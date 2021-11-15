@@ -1,0 +1,106 @@
+FROM httpd:2.4.46
+
+# Define a healthcheck that tests the root URL of the site
+HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:80/ || exit
+
+# Remove any files that may be in the public htdocs directory already.
+RUN rm -r /usr/local/apache2/htdocs/*
+
+# Build the front-end
+
+WORKDIR /
+
+RUN apt-get update
+RUN apt-get install -y curl
+
+#Install Node.js
+RUN curl -k -O https://nodejs.org/dist/v10.23.1/node-v10.23.1-linux-x64.tar.gz
+RUN tar -xvf *.gz
+RUN rm -rf *.gz
+ENV NODEJS_HOME /node-v10.23.1-linux-x64
+ENV PATH $NODEJS_HOME/bin:$PATH
+
+RUN npm -g config set user root
+
+#Install Angular CLI
+RUN npm install -g @angular/cli@8.3.29
+
+#Build
+RUN mkdir /build
+
+ARG CLIENT_DIR
+
+#If you first explicitly copy the package.json file and then run the npm install step that it can be cached 
+#and then you can copy the rest of the source directory. If the package.json file has changed, then 
+#that will be new and it will re-run the npm install caching that for future builds.
+
+COPY ./$CLIENT_DIR/package.json /build/$CLIENT_DIR/
+
+WORKDIR /build/$CLIENT_DIR
+
+RUN npm install
+
+WORKDIR /build
+
+COPY ./$CLIENT_DIR/ /build/$CLIENT_DIR/
+
+WORKDIR /build/$CLIENT_DIR
+
+# Speed the build by allocating more memory to node.js
+RUN node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build
+
+#copy angular dist app folder to the public htdocs of the apache container.
+RUN cp -a "./dist/$CLIENT_DIR/." /usr/local/apache2/htdocs/
+
+# Copy certificate files
+COPY ./server.crt /usr/local/apache2/conf/
+COPY ./server.key /usr/local/apache2/conf/
+
+# Uncomment lines to enable https
+
+RUN sed -i \
+        -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
+        -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
+        -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
+        /usr/local/apache2/conf/httpd.conf
+
+# Enable the rewrite module in apache2.
+RUN sed -i \
+  's/#LoadModule rewrite_module modules\/mod_rewrite.so/LoadModule rewrite_module modules\/mod_rewrite.so/g' \
+  /usr/local/apache2/conf/httpd.conf
+
+
+# Append to the published directory, that we want to rewrite any request that is not an actual file
+# to the index.html page.
+RUN sed -i '/<Directory "\/usr\/local\/apache2\/htdocs">/a### Rewrite rule was written from the Dockerfile when building the image ###\n\
+    DirectoryIndex index.html\n\
+    RewriteEngine on\n\
+    RewriteCond %{REQUEST_FILENAME} -s [OR]\n\
+    RewriteCond %{REQUEST_FILENAME} -d\n\
+    RewriteRule ^.*$ - [NC,L]\n\
+    RewriteRule ^(.*) index.html [NC,L]\n' \
+  /usr/local/apache2/conf/httpd.conf
+  
+  
+# Comment out the default config that handles requests to /.htaccess and /.ht* with a special error message,
+# Angular will handle all routing
+RUN sed -i '/<Files "\.ht\*">/,/<\/Files>/c# This was commented out from the Dockerfile\n# <Files ".ht*">\n#     Require all denied\n# <\/Files>' \
+  /usr/local/apache2/conf/httpd.conf
+
+
+# Change owner of the publicly available files to root user and daemon group. Httpd threads run as daemon.
+RUN chown -R root:daemon \
+  /usr/local/apache2/htdocs/*
+
+# Ensure that the files can only be read, even by the httpd server.
+RUN chmod -R 440 \
+  /usr/local/apache2/htdocs/*
+
+# Ensure for all the directories created, that the files within them can be read. We need the
+# execution access privilege on the directory for this. Dynamically apply this to all directories
+# at least one level into the served root. (-mindepth 1, otherwise the served directory itself
+# would be included - no need for that.
+RUN find /usr/local/apache2/htdocs/ -mindepth 1 -type d -exec chmod +x {} \;
+
+#expose port
+EXPOSE 4700

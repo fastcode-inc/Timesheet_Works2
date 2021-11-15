@@ -1,0 +1,40 @@
+version: '3.6'
+services:
+  ui:
+    build:
+      context: .
+      args:
+        CLIENT_DIR: "${CLIENT_DIR}"
+      dockerfile: UIDockerfile
+    container_name: ui
+    ports:
+      - '4700:443'
+    networks:
+      - samplenet
+    links:
+      - 'api:api'
+  reports:
+    build:
+      context: .
+      args:
+        CLIENT_DIR: "${CLIENT_DIR}"
+      dockerfile: ReportsDockerfile
+    container_name: reports
+    ports:
+      - '5556:5556'
+    networks:
+      - samplenet
+  api:
+    build:
+      context: .
+      args:
+        SERVER_DIR: "${SERVER_DIR}"
+        WAR_FILE: "${WAR_FILE}"
+      dockerfile: AppDockerfile
+    container_name: api
+    ports:
+      - '5555:5555'
+    networks:
+      - samplenet
+networks:
+  samplenet: null

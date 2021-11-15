@@ -1,0 +1,32 @@
+<div class="create-item" style="min-width: auto; max-width: 1200px">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{title}}</mat-card-title>
+      <a name="cancel" href="javascript:void(0)" (click)="onCancel()" class="cancle-btn"
+        ><i class="material-icons">add_circle</i></a
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <mat-table #table [dataSource]="tableSource.dataToPreview" class="mat-elevation-z8">
+        <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+          <mat-header-cell *matHeaderCellDef>
+            <div style="width: 100px; word-wrap: break-word; overflow: hidden">{{disCol}}</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element ">
+            <div style="width: 100px; word-wrap: break-word; overflow: hidden">
+              {{element.note }}
+              <span *ngIf="data.metaData[colIndex].metaColumnDataType != 'bytea'">{{element[disCol]}}</span>
+              <span *ngIf="data.metaData[colIndex].metaColumnDataType == 'bytea'"> ( image ) </span>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-card-content>
+    <mat-card-actions class="fc-text-right">
+      <button mat-raised-button (click)="onCancel()" type="button">{{'EMAIL-GENERAL.ACTIONS.OK' | translate}}</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

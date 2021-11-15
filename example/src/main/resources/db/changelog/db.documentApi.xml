@@ -1,0 +1,57 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="fastCode, Inc" id="000000-000033">
+        <createTable tableName="file">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="file_pkey"/>
+            </column>
+            <column name="ancestor_id" type="BIGINT"/>
+            <column name="ancestral_root_id" type="BIGINT"/>
+            <column name="content_length" type="BIGINT"/>
+            <column name="content_id" type="VARCHAR(255)"/>
+            <column name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="label" type="VARCHAR(255)"/>
+            <column name="lock_owner" type="VARCHAR(255)"/>
+            <column name="mime_type" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="successor_id" type="BIGINT"/>
+            <column name="summary" type="VARCHAR(255)"/>
+            <column name="versionp" type="VARCHAR(255)"/>
+            <column name="versiono" type="BIGINT"/>
+            <column name="deleted" type="BOOLEAN"/>
+                        <column name="email_template_id" type="BIGINT"/>
+            <column name="email_variable_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+ 		<changeSet author="fastCode, Inc" id="000000-000034">
+        <createTable tableName="locks">
+            <column name="entity_id" type="VARCHAR(64)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="locks_entity_pkey"/>
+            </column>
+            <column name="lock_owner" type="VARCHAR(64)">
+            </column>
+            </createTable>
+        
+             <createIndex indexName="locks_idx" tableName="locks" unique="true">
+            <column name = "entity_id"/>
+            <column name="lock_owner"/>
+        </createIndex>
+        
+    </changeSet>
+      <changeSet author="fastCode, Inc" id="file_history">
+        <createTable tableName="file_history">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="file_history_pkey"/>
+            </column>
+            <column name="content_id" type="VARCHAR(255)"/>
+            <column name="content_length" type="BIGINT"/>
+            <column name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="email_template_id" type="BIGINT"/>
+            <column name="mime_type" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="summary" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    
+</databaseChangeLog>

@@ -1,0 +1,273 @@
+<div class="list-container" id="list-container">
+  <div class="top-breadcrumb">
+    <h1 class="template-title">{{ title }}</h1>
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="breadcrumb">
+          <li>
+            <a [routerLink]="['/']">
+              <i class="material-icons">home</i>
+              &nbsp;{{ 'HOME' | translate }}</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="['/email/emailtemplate']">{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.TITLE' | translate }}</a>
+          </li>
+          <li>
+            <a>{{ 'EMAIL-GENERAL.ACTIONS.CREATE' | translate }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <mat-card *ngIf="!editorView">
+    <mat-card-content>
+      <form [formGroup]="formGroup" #attributeForm="ngForm" (ngSubmit)="saveEmail()" class="attribute-form">
+        <mat-form-field>
+          <input
+            formControlName="templateName"
+            matInput
+            placeholder="{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.TEMPLATE-NAME' | translate }}"
+            required
+          />
+          <label style="color: red" *ngIf="formGroup.get('templateName').invalid && submitted">
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</label
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            #category
+            placeholder="{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.CATEGORY' | translate }}"
+            aria-label="Number"
+            matInput
+            formControlName="category"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of categories | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+          <label
+            style="color: red"
+            *ngIf="!formGroup.get('category').valid && formGroup.get('category').touched && submitted"
+          >
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</label
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <table width="100%">
+            <tr width="100%">
+              <td width="95%">
+                <input
+                  formControlName="to"
+                  matInput
+                  id="to3"
+                  placeholder="{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.TO' | translate }}"
+                  (keyup)="onKeyUp($event, 'to3-variable')"
+                  required
+                />
+                <label style="color: red" *ngIf="!formGroup.get('to').valid && submitted">
+                  {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</label
+                >
+
+                <div id="to3-variable" class="dropdown-content">
+                  <div
+                    *ngFor="let variable of _ngb.EmailMergeTags"
+                    (click)="insertVariable($event, 'to3', 'to3-variable')"
+                  >
+                    {{ variable }}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button color="accent" (click)="showHideVariables('to3-variable')">
+                  {{ 'EMAIL-EDITOR.MERGE-FIELDS' | translate }}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </mat-form-field>
+        <mat-form-field>
+          <table width="100%">
+            <tr width="100%">
+              <td width="95%">
+                <input
+                  formControlName="cc"
+                  matInput
+                  id="cc3"
+                  placeholder="{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.CC' | translate }}"
+                  (keyup)="onKeyUp($event, 'cc3-variable')"
+                />
+                <label style="color: red" *ngIf="!formGroup.get('cc').valid && submitted">
+                  {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</label
+                >
+
+                <div id="cc3-variable" class="dropdown-content">
+                  <div
+                    *ngFor="let variable of _ngb.EmailMergeTags"
+                    (click)="insertVariable($event, 'cc3', 'cc3-variable')"
+                  >
+                    {{ variable }}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button color="accent" (click)="showHideVariables('cc3-variable')">
+                  {{ 'EMAIL-EDITOR.MERGE-FIELDS' | translate }}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </mat-form-field>
+        <mat-form-field>
+          <table width="100%">
+            <tr width="100%">
+              <td width="95%">
+                <input
+                  formControlName="bcc"
+                  matInput
+                  id="bcc3"
+                  placeholder="{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.BCC' | translate }}"
+                  (keyup)="onKeyUp($event, 'bcc3-variable')"
+                />
+                <label style="color: red" *ngIf="!formGroup.get('bcc').valid && submitted">
+                  {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</label
+                >
+
+                <div id="bcc3-variable" class="dropdown-content">
+                  <div
+                    *ngFor="let variable of _ngb.EmailMergeTags"
+                    (click)="insertVariable($event, 'bcc3', 'bcc3-variable')"
+                  >
+                    {{ variable }}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button color="accent" (click)="showHideVariables('bcc3-variable')">
+                  {{ 'EMAIL-EDITOR.MERGE-FIELDS' | translate }}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </mat-form-field>
+        <mat-form-field>
+          <table width="100%">
+            <tr width="100%">
+              <td width="95%">
+                <input
+                  formControlName="subject"
+                  matInput
+                  id="subject3"
+                  placeholder="{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.SUBJECT' | translate }}"
+                  (keyup)="onKeyUp($event, 'subject3-variable')"
+                />
+                <label style="color: red" *ngIf="!formGroup.get('subject').valid && submitted">
+                  {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}
+                </label>
+
+                <div id="subject3-variable" class="dropdown-content">
+                  <div
+                    *ngFor="let variable of _ngb.SubjectMergeTags"
+                    (click)="insertVariable($event, 'subject3', 'subject3-variable')"
+                  >
+                    {{ variable }}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button color="accent" (click)="showHideVariables('subject3-variable')">
+                  {{ 'EMAIL-EDITOR.MERGE-FIELDS' | translate }}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </mat-form-field>
+        <div>
+          <lib-email-attachment [files]="files" (onAttachmentAdd)="onAttachmentAdd($event)"></lib-email-attachment>
+        </div>
+
+        <mat-form-field>
+          <textarea
+            formControlName="description"
+            matInput
+            placeholder="{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.DESCRIPTION' | translate }}"
+          ></textarea>
+          <mat-error *ngIf="!formGroup.get('description').valid && formGroup.get('description').touched">
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+          >
+        </mat-form-field>
+
+        <mat-checkbox formControlName="active"
+          >{{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.ACTIVE' | translate }}
+        </mat-checkbox>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="saveNextClick()">
+        {{ 'EMAIL-EDITOR.SAVE-EMAIL-BUTTON-TEXT' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <div>
+    <mat-progress-bar *ngIf="inProgress" mode="buffer"></mat-progress-bar>
+  </div>
+  <mat-card>
+    <ip-email-builder style="height: calc(100% - 64px)" *ngIf="editorView">
+      <div class="top-actions">
+        <button
+          mat-button
+          (click)="router.navigate(['/email/emailtemplate'])"
+          style="margin-right: 5px"
+          color="Grey"
+          [hidden]="!editorView"
+        >
+          {{ 'EMAIL-GENERAL.ACTIONS.CANCEL' | translate }}
+        </button>
+
+        <button
+          mat-flat-button
+          (click)="saveEmail()"
+          style="margin-bottom: 2px; margin-right: 5px; color: white; height: 36px"
+          color="primary"
+          [hidden]="!editorView"
+        >
+          {{ 'EMAIL-GENERAL.ACTIONS.SAVE' | translate }}
+        </button>
+
+        <button mat-button (click)="openEmailTemplate()" style="margin-right: 5px" color="accent">
+          {{ 'EMAIL-EDITOR.TEMPLATE-ATTRIBUTE-TITLE' | translate }}
+        </button>
+
+        <button
+          mat-button
+          (click)="resetTemplate()"
+          style="margin-right: 5px"
+          [disabled]="isLoading | async"
+          color="accent"
+        >
+          {{ 'EMAIL-EDITOR.RESET-BUTTON-TEXT' | translate }}
+        </button>
+
+        <button
+          mat-button
+          (click)="sendTestMail()"
+          style="margin-right: 5px"
+          [disabled]="isLoading | async"
+          color="accent"
+        >
+          {{ 'EMAIL-EDITOR.SEND-TEST-EMAIL-BUTTON-TEXT' | translate }}
+        </button>
+      </div>
+
+      <div class="top-content">
+        <mat-card> </mat-card>
+      </div>
+      <div class="after-content-blocks"></div>
+      <div class="after-structure-blocks"></div>
+    </ip-email-builder>
+  </mat-card>
+</div>

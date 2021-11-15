@@ -1,0 +1,33 @@
+.association-div {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.list-container {
+  width: 100%;
+  .card {
+    height: auto;
+    max-width: 900px;
+    width: 100%;
+  }
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 0;
+  top: 13px;
+  color: rgb(179, 179, 179);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.file-container {
+  align-items: center;
+  padding: 5px;
+  height: 51.3px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}

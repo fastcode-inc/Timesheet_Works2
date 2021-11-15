@@ -1,0 +1,8 @@
+<mat-card class="tooltip-container">
+  <ng-template #dataOutlet>
+    <div class="inner-container">
+      <span [innerHTML]="jsonData"> </span>
+    </div>
+  </ng-template>
+  <ng-container *ngTemplateOutlet="dataOutlet"> </ng-container>
+</mat-card>

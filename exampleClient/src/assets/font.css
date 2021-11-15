@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./futura/FuturaPT-Light.woff2') format('woff2'), url('./futura/FuturaPT-Light.woff') format('woff'),
+    url('./futura/FuturaPT-Light.ttf') format('truetype'),
+    url('./futura/FuturaPT-Light.svg#FuturaPT-Light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./futura/FuturaPT-Medium.woff2') format('woff2'), url('./futura/FuturaPT-Medium.woff') format('woff'),
+    url('./futura/FuturaPT-Medium.ttf') format('truetype'),
+    url('./futura/FuturaPT-Medium.svg#FuturaPT-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./futura/FuturaPT-Bold.woff2') format('woff2'), url('./futura/FuturaPT-Bold.woff') format('woff'),
+    url('./futura/FuturaPT-Bold.ttf') format('truetype'), url('./futura/FuturaPT-Bold.svg#FuturaPT-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Futura PT Book';
+  src: url('./futura/FuturaPT-Book.woff2') format('woff2'), url('./futura/FuturaPT-Book.woff') format('woff'),
+    url('./futura/FuturaPT-Book.ttf') format('truetype'), url('./futura/FuturaPT-Book.svg#FuturaPT-Book') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

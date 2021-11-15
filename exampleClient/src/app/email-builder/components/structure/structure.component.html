@@ -1,0 +1,52 @@
+<div class="structure" [ngClass]="structure.type" [ngStyle]="getStructureStyles()">
+  <div class="columm" *ngFor="let column of structure.elements">
+    <smooth-dnd-container
+      groupName="blocks"
+      [getChildPayload]="getBlockPayload(column)"
+      (drop)="onBlockDrop(column, $event)"
+      dragHandleSelector=".block-move"
+    >
+      <ng-container *ngIf="column.length">
+        <smooth-dnd-draggable *ngFor="let block of column; let key = index">
+          <div class="block">
+            <div class="block-tools" fxLayout fxLayoutGap="0.2em" fxLayoutAlign="center">
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="editBlock(block)"
+                matTooltip="{{ 'COMPONENTS.STRUCTURE.CHANGE-BLOCK-SETTINGS' | translate }}"
+              >
+                <mat-icon aria-label="Move block">edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                class="block-move"
+                matTooltip="{{ 'COMPONENTS.STRUCTURE.CHANGE-BLOCK-ORDER' | translate }}"
+              >
+                <mat-icon aria-label="Move block">pan_tool</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                (click)="dublicateBlock(key, column, block)"
+                matTooltip="{{ 'COMPONENTS.STRUCTURE.DUPLICATE-BLOCK' | translate }}"
+              >
+                <mat-icon aria-label="Dublicate block">file_copy</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                (click)="removeBlock(key, column)"
+                color="warn"
+                matTooltip="{{ 'COMPONENTS.STRUCTURE.DELETE-BLOCK' | translate }}"
+              >
+                <mat-icon aria-label="Remove block">delete_forever</mat-icon>
+              </button>
+            </div>
+            <ng-content *ipDynamicComponent="block"></ng-content>
+          </div>
+        </smooth-dnd-draggable>
+      </ng-container>
+      <ip-empty-block fxLayout fxLayoutAlign="center center" *ngIf="!column.length"></ip-empty-block>
+    </smooth-dnd-container>
+  </div>
+  <ng-content select=".tools"></ng-content>
+</div>

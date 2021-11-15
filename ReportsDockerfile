@@ -1,0 +1,41 @@
+FROM openjdk:8-jdk
+
+WORKDIR /
+
+ARG CLIENT_DIR
+
+RUN apt-get update
+RUN apt-get install -y curl
+
+#Install Node.js
+RUN curl -k -O https://nodejs.org/dist/v10.23.1/node-v10.23.1-linux-x64.tar.gz
+RUN tar -xvf *.gz
+RUN rm -rf *.gz
+ENV NODEJS_HOME /node-v10.23.1-linux-x64
+ENV PATH $NODEJS_HOME/bin:$PATH
+
+RUN npm -g config set user root
+
+RUN mkdir /build
+
+#If you first explicitly copy the package.json file and then run the npm install step that it can be cached 
+#and then you can copy the rest of the source directory. If the package.json file has changed, then 
+#that will be new and it will re-run the npm install caching that for future builds.
+
+COPY ./$CLIENT_DIR/package.json /build/$CLIENT_DIR/
+
+WORKDIR /build/$CLIENT_DIR
+
+RUN npm install
+
+COPY ./$CLIENT_DIR/server/ /build/$CLIENT_DIR/server/
+
+WORKDIR /build/$CLIENT_DIR/server
+
+RUN ls -lt
+
+#expose port
+EXPOSE 5556
+
+#cmd to execute
+ENTRYPOINT ["node","index.js"]

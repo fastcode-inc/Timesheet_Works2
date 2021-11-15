@@ -1,0 +1,62 @@
+FROM openjdk:8-jdk
+
+WORKDIR /
+
+RUN apt-get update
+RUN apt-get install -y curl
+
+#Install Maven
+
+RUN curl -O https://archive.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.tar.gz
+RUN tar -xvf *.gz
+RUN rm -rf *.gz
+ENV MAVEN_HOME /apache-maven-3.5.4
+ENV PATH $MAVEN_HOME/bin:$PATH
+
+#Install Postgres JDBC Driver
+
+RUN curl -O https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
+RUN mvn install:install-file "-Dfile=postgresql-42.2.2.jar" "-DgroupId=org.postgresql" "-DartifactId=postgresql" "-Dversion=42.2.2" "-Dpackaging=jar"
+
+# Install Git
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y git
+
+ENV DEBIAN_FRONTEND noninteractive
+
+#Build
+RUN mkdir /build
+
+ARG SERVER_DIR
+
+RUN echo $SERVER_DIR
+
+#We need to explicitly set this again so that it will work with WORKDIR (and possibly COPY commands)
+
+ARG S_DIR=$SERVER_DIR
+
+RUN echo $S_DIR
+
+COPY $S_DIR/ /build/$S_DIR/
+
+RUN ls -lt /build
+
+WORKDIR /build/$S_DIR
+
+RUN mvn clean package -Dmaven.test.skip=true
+
+#expose port
+EXPOSE 5555
+
+WORKDIR /build/$S_DIR/target
+
+RUN echo $PWD
+
+RUN ls -lt
+
+ARG WAR_FILE
+ENV APP_WAR=$WAR_FILE
+
+#Use the exec form of ENTRYPOINT so that it expands the shell variables
+ENTRYPOINT java -jar $APP_WAR

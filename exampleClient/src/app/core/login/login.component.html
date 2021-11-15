@@ -1,0 +1,50 @@
+<section class="spinner-container" *ngIf="loading" style="z-index: 99999999">
+  <mat-spinner></mat-spinner>
+</section>
+<div class="login-container">
+  <mat-card class="item-card">
+    <mat-card-title class="text-center">
+      <figure class="logo">
+        <img src="../../assets/images/logo.png" alt="logo" style="border-radius: 46px" />
+      </figure>
+      <figcaption class="text-center">
+        <h2 class="sub-title">{{ 'LOGIN.LOGIN' | translate }}</h2>
+      </figcaption>
+    </mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="itemForm" #loginNgForm="ngForm" (ngSubmit)="onSubmit()" class="item-form">
+        <mat-form-field>
+          <span matPrefix><i class="material-icons"> account_circle </i> &nbsp;</span>
+          <input formControlName="userName" matInput placeholder="{{ 'LOGIN.FIELDS.USERNAME' | translate }}" required />
+          <mat-error *ngIf="!itemForm.get('userName').valid && itemForm.get('userName').touched">
+            {{ 'GENERAL.ERRORS.REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <span matPrefix><i class="material-icons">https</i>&nbsp;</span>
+          <input
+            type="password"
+            formControlName="password"
+            matInput
+            placeholder="{{ 'LOGIN.FIELDS.PASSWORD' | translate }}"
+            required
+          />
+          <mat-error *ngIf="!itemForm.get('password').valid && itemForm.get('password').touched">
+            {{ 'GENERAL.ERRORS.REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="itemForm.errors?.passwordUserNameError && (itemForm.touched || itemForm.dirty)">
+          {{ 'LOGIN.ERRORS.INVALID-CREDENTIALS' | translate }}
+        </mat-error>
+        <mat-card-actions class="item-action text-center">
+          <button name="login" mat-flat-button color="primary" class="btn-submit">
+            {{ 'LOGIN.LOGIN' | translate }}
+          </button>
+        </mat-card-actions>
+        <span [routerLink]="['/forgot-password']" style="text-align: center">
+          <a href="javascript:;">{{ 'LOGIN.MESSAGES.FORGOT-PASSWORD' | translate }}</a>
+        </span>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

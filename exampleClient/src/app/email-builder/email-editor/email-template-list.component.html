@@ -1,0 +1,97 @@
+<div class="list-container" (onScroll)="onTableScroll()" appVirtualScroll>
+  <div class="top-breadcrumb">
+    <h1 class="template-title">{{ title }}</h1>
+    <div class="fc-row">
+      <div class="fc-col-md-8">
+        <ul class="breadcrumb">
+          <li>
+            <a [routerLink]="['/']">
+              <i class="material-icons">home</i>
+              &nbsp;{{ 'HOME' | translate }}</a
+            >
+          </li>
+          <li>
+            <a>{{ title }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="fc-col-md-4 fc-text-right">
+        <button mat-raised-button color="primary" [disabled]="!IsCreatePermission" (click)="addNew()">
+          <i class="material-icons"> add_circle_outline </i> &nbsp;{{ 'EMAIL-GENERAL.ACTIONS.ADD' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <mat-card>
+    <app-list-filters [columnsList]="selectedColumns" (onSearch)="applyFilter($event)"></app-list-filters>
+    <div class="table-container">
+      <mat-table matSort [dataSource]="items" class="mat-elevation-z8">
+        <ng-container matColumnDef="templatename">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            {{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.TEMPLATE-NAME' | translate }}</mat-header-cell
+          >
+          <mat-cell *matCellDef="let item">
+            {{ item.templateName }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="subject">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            {{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.SUBJECT' | translate }}</mat-header-cell
+          >
+          <mat-cell *matCellDef="let item">
+            {{ item.subject }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            {{ 'EMAIL-EDITOR.EMAIL-TEMPLATE.FIELDS.CATEGORY' | translate }}</mat-header-cell
+          >
+          <mat-cell *matCellDef="let item">
+            {{ item.category }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> {{ 'EMAIL-GENERAL.ACTIONS.ACTIONS' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button
+              mat-icon-button
+              color="warn"
+              aria-label="Example icon-button with a heart icon text-dangger"
+              matTooltip="{{ 'EMAIL-GENERAL.ACTIONS.MAP' | translate }}"
+              (click)="getDataSourceMap(item)"
+            >
+              <mat-icon>link</mat-icon>
+              <!-- <i class="fa fa-link" aria-hidden="true"></i> -->
+            </button>
+            <button
+              style="color: black"
+              name="edit"
+              mat-icon-button
+              aria-label="Example icon-button with a heart icon text-dangger"
+              matTooltip="{{ 'EMAIL-GENERAL.ACTIONS.OPEN-DETAILS' | translate }}"
+              routerLink="./{{ item.id }}"
+            >
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              aria-label="Example icon-button with a heart icon text-dangger"
+              matTooltip="{{ 'EMAIL-GENERAL.ACTIONS.DELETE' | translate }}"
+              (click)="deleteData(item)"
+            >
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+    <section class="small-spinner-container" *ngIf="isLoadingResults">
+      <mat-spinner></mat-spinner>
+    </section>
+  </mat-card>
+</div>
