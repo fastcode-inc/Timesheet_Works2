@@ -1,0 +1,14 @@
+@import 'src/styles/base.scss';
+.container {
+  margin: $fc-margin3;
+  height: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  width: 100%;
+  max-height: calc(100% - 280px);
+}

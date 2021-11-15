@@ -1,0 +1,3 @@
+username,emailaddress,password,isactive,versiono,firstname,lastname,join_date,isemailconfirmed
+admin,admin@demo.com,$2a$10$W1bzIA9LUG21QvDZdiwUx.vnTFk/IIFd9paofhrGNj6dxS.c2px8W,t,0,,,,
+

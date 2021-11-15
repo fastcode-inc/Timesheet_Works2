@@ -1,0 +1,33 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    
+         <changeSet author="fastCode, Inc" id="permission_1">
+    	<loadData encoding="UTF-8" file="db/data/permission_1.csv" separator="," tableName="permission"/>
+    </changeSet>
+    <changeSet author="fastCode, Inc" id="role">
+    	<loadData encoding="UTF-8" file="db/data/role.csv" separator="," tableName="role"/>
+    </changeSet>
+    <changeSet author="fastCode, Inc" id="rolepermission">
+    	<loadData encoding="UTF-8" file="db/data/rolepermission.csv" separator="," tableName="rolepermission"/>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="user">
+    	<loadData encoding="UTF-8" file="db/data/user.csv" separator="," tableName="users"/>
+	</changeSet>
+    <changeSet author="fastCode, Inc" id="userrole">
+    	<loadData encoding="UTF-8" file="db/data/userrole.csv" separator="," tableName="usersrole"/>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="userpreference">
+    	<loadData encoding="UTF-8" file="db/data/userpreference.csv" separator="," tableName="userspreference"/>
+	</changeSet>
+	 <changeSet author="fastCode, Inc" id="email_variable_type_data">
+    	<loadData encoding="UTF-8" file="db/data/emailVariableType.csv" separator="," tableName="email_variable_type"/>
+		</changeSet>
+		
+	 <changeSet author="fastCode, Inc" id="master_entity_data">
+    	<loadData encoding="UTF-8" file="db/data/emailMasterEntity.csv" separator="," tableName="master_entity"/>
+		</changeSet>	
+</databaseChangeLog>

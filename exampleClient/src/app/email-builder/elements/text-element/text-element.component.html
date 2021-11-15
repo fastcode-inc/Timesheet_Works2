@@ -1,0 +1,22 @@
+<quill-editor
+  #myquill
+  id="myQuillId"
+  [ngStyle]="getTextStyles()"
+  (onEditorCreated)="getEditorInstance($event)"
+  (onContentChanged)="getContent($event)"
+  [modules]="getQuillConfig()"
+  [required]="true"
+  theme="bubble"
+  format="html"
+  [(ngModel)]="block.innerText"
+  (click)="hideVariables('subject4-variable')"
+>
+</quill-editor>
+<button [ngClass]="{ active: showActive }" class="addIcon" color="accent">
+  {{ 'ELEMENTS.TEXT-ELEMENT.MERGE-FIELD-BUTTON' | translate }}
+  <span id="subject4-variable" *ngIf="showDropDown" class="dropdown-content addIcon_list">
+    <span class="addIcon_list_item" *ngFor="let variable of _ngb.MergeTags" (click)="insertVariable($event)">
+      {{ variable }}</span
+    >
+  </span>
+</button>

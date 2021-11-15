@@ -1,0 +1,136 @@
+{
+  "GENERAL": {
+    "ACTIONS": {
+      "SAVE": "Save",
+      "CANCEL": "Cancel",
+      "OK": "OK",
+      "DELETE": "Delete",
+      "CONFIRM": "Confirm",
+      "EDIT": "Edit",
+      "UPDATE": "Update",
+      "SELECT": "Select",
+      "PAUSE": "Pause",
+      "BACK": "Back",
+      "ACTIONS": "Actions",
+      "DE-LINK": "De-link",
+      "ADD": "Add",
+      "OPEN-DETAILS": "Open details"
+    },
+    "ERRORS": {
+      "REQUIRED": "Field is required.",
+      "LENGTH-EXCEEDING": "Length cannot be greater than {{length}}.",
+      "LENGTH-SHORT": "Length cannot be less than {{length}}.",
+      "INVALID-FORMAT": "Invalid format.",
+      "PASSWORD-MISMATCH": "Password do not match.",
+      "FETCHING-RESULT": "An error occurred while fetching results",
+      "FETCHING-DETAILS": "An error occurred while fetching details",
+      "UPDATE": "An error occurred while updating"
+    }
+  },
+  "HOME": "Home",
+  "LOGIN": {
+    "LOGIN": "Login",
+    "ERRORS": {
+      "INVALID-CREDENTIALS": "Wrong username or password."
+    },
+    "FIELDS": {
+      "USERNAME": "Username",
+      "PASSWORD": "Password"
+    },
+    "MESSAGES": {
+      "FORGOT-PASSWORD": "forgot password?",
+      "REGISTER": "Don't have an account? Register <a href=\"javascript:;\"> here.</a>",
+      "OIDC-TITLE": "Login via your OpenID Connect provider."
+    }
+  },
+  "ACCOUNT": {
+    "FORGOT-PASSWORD": {
+      "TITLE": "Forgot password",
+      "HEADING": "Enter your user account's verified email address and we will send you a password reset link.",
+      "SEND-EMAIL-BTN": "Send password reset email",
+      "EMAIL-SENT-MESSAGE": "Check your email for a link to reset your password. If it doesn�t appear within a few minutes, check your spam folder.",
+      "GO-TO-LOGIN": "Go to login"
+    },
+    "RESET-PASSWORD": {
+      "TITLE": "Reset Password",
+      "RESET-MESSAGE": "Your password is reset.",
+      "FIELDS": {
+        "NEW-PASSWORD": "New password",
+        "CONFIRM-PASSWORD": "Confirm password"
+      }
+    },
+    "UPDATE-PASSWORD": {
+      "TITLE": "Update Password",
+      "UPDATED-MESSAGE": "Your password is updated.",
+      "FIELDS": {
+        "OLD-PASSWORD": "Old password",
+        "NEW-PASSWORD": "New password",
+        "CONFIRM-PASSWORD": "Confirm password"
+      }
+    },
+    "UPDATE-PROFILE": {
+      "TITLE": "Update Profile",
+      "UPDATED-MESSAGE": "Your profile is updated."
+    }
+  },
+  "en": "English",
+  "fr": "French",
+  "MainNav": {
+    "Home": "Home",
+    "AdhocReports": "Ad-hoc Reports",
+    "Admin": "Admin",
+    "Entities": "Entities",
+    "AccessMgmt": "User Management",
+    "Users": "Users",
+    "Language": "Language",
+    "Monitoring": "Monitoring",
+    "Message": "Welcome to fastcode",
+    "Tools": "Tools",
+    "Administration": "Administration",
+    "About": "About",
+    "API": "API",
+    "MENU": {
+      "UPDATE-PASSWORD": "Update Password",
+      "UPDATE-PROFILE": "Update Profile",
+      "LOGOUT": "Logout"
+    },
+    "EmailTemplate": "Email Templates",
+    "Email": {
+      "Title": "Email Template Builder",
+      "EmailTemplate": "Email Templates",
+      "EmailVariables": "Email Merge Fields"
+    }
+  },
+  "CONFIRM-DIALOG": {
+    "TITLE": "Confirm",
+    "MESSAGE": "Are you sure you want to proceed?",
+    "DELETE": {
+      "MESSAGE": "Are you sure you want to delete this entry?",
+      "TITLE": "Delete"
+    }
+  },
+  "LIST-FILTERS": {
+    "ADD-FILTER-FIELD": {
+      "OPERATORS": {
+        "TITLE": "Operator"
+      },
+      "PLACEHOLDERS": {
+        "VALUE": "Value",
+        "FROM-VALUE": "From value",
+        "TO-VALUE": "To value"
+      }
+    },
+    "FIELD-CRITERIA-DISPLAY": {
+      "CONTAINS": "contains",
+      "EQUALS": "is equal to",
+      "NOT-EQUAL": "not equal to",
+      "FROM": "from",
+      "TO": "to"
+    },
+    "SEARCH-BUTTON-TEXT": "Filter",
+    "ADD-FILTER-PLACEHOLDER": "Add Filter"
+  },
+  "PICKER": {
+    "TITLE": "Select a {{title}}"
+  }
+}

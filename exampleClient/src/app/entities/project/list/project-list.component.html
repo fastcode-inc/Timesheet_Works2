@@ -1,0 +1,17 @@
+<fc-general-list
+  [IsCreatePermission]="IsCreatePermission"
+  [IsDeletePermission]="IsDeletePermission"
+  [items]="items"
+  [selectedColumns]="selectedColumns"
+  [displayedColumns]="displayedColumns"
+  [title]="title"
+  [isLoadingResults]="isLoadingResults"
+  [selectedAssociation]="selectedAssociation"
+  (onOpenDetails)="openDetails($event)"
+  (onTableScroll)="onTableScroll()"
+  (onSearch)="applyFilter($event)"
+  (onDelete)="delete($event)"
+  (onBack)="back()"
+  (onAddNew)="addNew(null)"
+>
+</fc-general-list>

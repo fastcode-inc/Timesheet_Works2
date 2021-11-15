@@ -1,0 +1,364 @@
+@import '~@angular/material/_theming';
+
+// @import './node_modules/@angular/material/_theming.scss';
+
+@mixin main-style($theme, $fontConfig) {
+  $fc-primary-color: map-get($theme, primary);
+  $fc-accent-color: map-get($theme, accent);
+  $fc-warn-color: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  body {
+    font-family: mat-font-family($fontConfig, body-1);
+    background-color: mat-color($fc-primary-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  p,
+  a,
+  span,
+  div {
+    // font-family: ABeeZee;
+    font-family: mat-font-family($fontConfig, body-1);
+
+    // font-family: mat-font-family($config);
+  }
+
+  .sidenav .mat-expansion-indicator::after {
+    color: mat-color($background, background);
+  }
+
+  body {
+    font-family: mat-font-family($fontConfig, body-1);
+  }
+
+  .snackbar-background {
+    background-color: #8bc34a;
+  }
+
+  .subnav .mat-radio-label {
+    font-size: mat-font-size($fontConfig, button);
+  }
+
+  button.mat-primary {
+    color: mat-color($background, background) !important;
+    font-size: mat-font-size($fontConfig, button) !important;
+  }
+
+  .mat-form-field.mat-primary {
+    background: transparent !important;
+  }
+
+  .sidenav.mat-drawer.mat-sidenav .mat-toolbar.mat-primary {
+    // background-color: mat-color($fc-accent-color);
+    background-color: #fff;
+    box-shadow: 0px 1px 7px -2px mat-color($fc-primary-color);
+  }
+
+  .top-breadcrumb {
+    margin-bottom: 20px;
+  }
+
+  .top-breadcrumb .template-title {
+    font-size: mat-font-size($fontConfig, title);
+    font-weight: normal;
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .top-breadcrumb .template-title:after {
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 0;
+    height: 3px;
+
+    // background: #e27e4b;
+    background: mat-color($fc-accent-color);
+    z-index: 99;
+    width: 100%;
+    border-radius: 32px;
+  }
+
+  .top-breadcrumb .breadcrumb {
+    display: flex;
+    padding: 0;
+    margin-bottom: 40px;
+    background-color: transparent;
+    list-style: none;
+  }
+
+  .top-breadcrumb .breadcrumb > li + li:before {
+    display: none;
+  }
+
+  .top-breadcrumb .breadcrumb li:last-child a::after {
+    display: none;
+  }
+
+  .top-breadcrumb .breadcrumb li a::after {
+    content: '/';
+    position: absolute;
+    right: -2px;
+  }
+
+  .top-breadcrumb .breadcrumb li a:not([href]) {
+    opacity: 0.4;
+  }
+
+  .top-breadcrumb .breadcrumb li a .material-icons {
+    // font-size: 20px;
+    font-size: mat-font-size($fontConfig, caption);
+    position: relative;
+    line-height: 0;
+    top: 2px;
+  }
+
+  .top-breadcrumb .breadcrumb li a {
+    display: block;
+    font-size: 18px;
+    font-family: inherit;
+    opacity: 0.8;
+
+    //  color: black;
+    color: mat-color($foreground, text);
+    padding-right: 16px;
+    margin-right: 9px;
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    text-decoration: none;
+  }
+
+  .top-breadcrumb button.mat-primary {
+    box-shadow: -2px 2px 4px 0px #b6b6d6;
+  }
+
+  .mat-header-cell {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+
+    // color: black !important;
+    color: mat-color($foreground, text) !important;
+    text-transform: capitalize;
+  }
+
+  .cdk-overlay-pane.fc-modal-dialog {
+    width: auto !important;
+    height: auto !important;
+  }
+
+  button.mat-menu-item:last-child {
+    border-bottom: 0;
+  }
+
+  button.mat-menu-item {
+    width: 100%;
+    border-bottom: 1px solid #dedede;
+  }
+  .mat-form-field {
+    font-size: mat-font-size($fontConfig, input) !important;
+    font-family: mat-font-family($fontConfig, input);
+  }
+
+  .mat-card-header,
+  .mat-card-header-text {
+    margin: 0 !important;
+  }
+
+  .mat-card-header .cancle-btn {
+    opacity: 0.8;
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    color: mat-color($fc-accent-color);
+    transform: rotate(45deg);
+  }
+
+  .mat-card-header .mat-card-title {
+    font-size: mat-font-size($fontConfig, title) !important;
+    margin-bottom: 14px !important;
+    display: inline-block;
+    @media screen and (max-width: 580px) {
+      font-size: 24px !important;
+    }
+  }
+
+  .mat-nav-list .mat-list-item {
+    text-transform: capitalize;
+  }
+
+  .mat-form-field-required-marker {
+    color: mat-color($fc-accent-color);
+  }
+
+  .fc-bottom-nav {
+    width: 100%;
+    box-shadow: 0px 0px 4px 3px #aba6a6;
+  }
+
+  .fc-bottom-nav .mat-tab-links {
+    display: flex;
+    width: 100%;
+    //justify-content: space-between;
+  }
+
+  .fc-bottom-nav .mat-tab-links .fc-tab-link {
+    opacity: 1 !important;
+
+    // color: #fff;
+    color: mat-color($foreground, text);
+    padding-top: 3px;
+    min-width: auto;
+  }
+
+  .fc-bottom-nav .mat-tab-links .mat-tab-link.mat-tab-disabled {
+    color: rgba(255, 255, 255, 0.59);
+  }
+
+  .mat-tab-header-pagination-disabled .mat-tab-header-pagination-chevron {
+    border-color: rgba(242, 242, 242, 0.59) !important;
+  }
+
+  .fc-bottom-nav .mat-tab-header-pagination-chevron {
+    border-color: rgb(255, 255, 255) !important;
+  }
+
+  .cdk-global-overlay-wrapper {
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  mat-datepicker-content.mat-datepicker-content.mat-primary {
+    // background: #fff !important;
+    background: mat-color($background, background);
+  }
+
+  mat-option {
+    text-transform: capitalize;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    // background-color: #006064;
+    background-color: mat-color($fc-primary-color, lighter);
+
+    //  outline: 1px solid #000000;
+  }
+
+  .mat-expansion-panel-content:after {
+    content: '';
+    background: mat-color($background, background);
+  }
+
+  .mat-expansion-panel-content .mat-expansion-panel-content:after {
+    display: none;
+  }
+
+  .spinner-container {
+    background: mat-color($background, background);
+    z-index: 999;
+  }
+
+  .time-container .lable-inline {
+    opacity: 0.7;
+    margin: 0px 0 -12px;
+    font-size: 15px;
+    font-weight: 500;
+    position: absolute;
+    padding: 0;
+    background: transparent;
+    width: auto;
+  }
+
+  .time-container {
+    padding-left: 0;
+  }
+
+  .period-selector__button--active {
+    //  color: #ff8f00 !important;
+    color: mat-color($fc-accent-color) !important;
+  }
+
+  .mat-header-cell,
+  .mat-sort-header-button {
+    white-space: inherit;
+    text-transform: capitalize;
+  }
+
+  /* custom grid css starts */
+  .fc-row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+
+  .clock-face__number span.active {
+    background-color: mat-color($fc-primary-color) !important;
+  }
+
+  .timepicker__header {
+    background-color: mat-color($fc-primary-color) !important;
+  }
+
+  .clock-face__clock-hand {
+    background-color: mat-color($fc-primary-color) !important;
+  }
+
+  .timepicker-button {
+    // color: #006064 !important;
+    color: mat-color($fc-primary-color) !important;
+  }
+
+  .mat-dialog-actions.fc-text-right {
+    justify-content: flex-end;
+  }
+
+  .mat-form-field-label {
+    text-transform: capitalize;
+  }
+
+  .mat-input-element {
+    color: mat-color($foreground, text);
+  }
+
+  //===============//
+  .list-container .mat-expansion-panel-content:after {
+    display: none;
+  }
+
+  .tools button.mat-primary,
+  .block-tools button.mat-primary {
+    color: #333 !important;
+  }
+
+  .fc-icon {
+    color: mat-color($fc-primary-color);
+    margin-right: 16px;
+    font-size: 32px;
+  }
+
+  button.mat-stroked-button.mat-primary {
+    color: mat-color($fc-primary-color) !important;
+  }
+
+  .mat-button-toggle-checked {
+    background-color: mat-color($fc-primary-color) !important;
+    color: white !important;
+  }
+}

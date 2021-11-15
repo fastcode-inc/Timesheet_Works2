@@ -1,0 +1,12 @@
+id,master_name,master_value
+1,Date,"MMM d, y, h:mm:ss a"
+2,Date,"M/d/yy, h:mm a"
+3,Date,"dd-MMM-yy"
+4,Date,"DD/MM/YY"
+5,Date,"YY/MM/DD"
+6,Date,"YYYY-MM-DD"
+7,Currency,"$"
+8,Currency,"€"
+9,Currency,"£"
+10,Currency,"¥"
+11,Currency,"?"

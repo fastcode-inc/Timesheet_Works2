@@ -1,0 +1,135 @@
+<section class="spinner-container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</section>
+<div *ngIf="item" class="list-container">
+  <div class="top-breadcrumb">
+    <h1 class="template-title">{{ title }}</h1>
+    <div class="fc-row">
+      <div class="fc-col-sm-12">
+        <ul class="breadcrumb">
+          <li>
+            <a [routerLink]="['/dashboard']"><i class="material-icons"> home </i> &nbsp;Dashboard</a>
+          </li>
+          <li>
+            <a [routerLink]="['/email/datasource']">{{ title }}</a>
+          </li>
+          <li>
+            <a>{{ idParam }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <mat-card class="card">
+    <mat-card-content>
+      <form [formGroup]="itemForm" #itemNgForm="ngForm" (ngSubmit)="onSubmit()" class="item-form">
+        <mat-form-field>
+          <input
+            formControlName="name"
+            matInput
+            placeholder="{{ 'EMAIL-EDITOR.DATA-SOURCE.FIELDS.NAME' | translate }}"
+            readonly
+          />
+          <mat-error *ngIf="!itemForm.get('name').valid && itemForm.get('name').touched">
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field formGroupName="emailTemplate">
+          <mat-label>{{ 'EMAIL-EDITOR.DATA-SOURCE.FIELDS.EMAIL-TEMPLATE' | translate }}</mat-label>
+          <mat-select
+            formControlName="id"
+            required
+            [disabled]="readOnlyQuery"
+            [matTooltip]="readOnlyQuery ? translate.instant('EMAIL-EDITOR.DATA-SOURCE.LABELS.DATASOURCE-BINDED') : ''"
+          >
+            <mat-option *ngFor="let type of emailTemplates" [value]="type.id">
+              {{ type.templateName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!itemForm.get('emailTemplate').valid && itemForm.get('emailTemplate').touched">
+            {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+          >
+        </mat-form-field>
+        <!-- <mat-form-field>
+					<input formControlName="sqlQuery" matInput
+						placeholder="{{'EMAIL-EDITOR.DATA-SOURCE.FIELDS.SQL-QUERY' | translate}}">
+					<mat-error *ngIf="!itemForm.get('sqlQuery').valid && itemForm.get('sqlQuery').touched">
+						{{'EMAIL-GENERAL.ERRORS.REQUIRED' | translate}}</mat-error>
+				</mat-form-field> -->
+        <div class="sqlEditor">
+          <ngx-codemirror
+            #myEditor
+            formControlName="sqlQuery"
+            (keyup)="getChangeContent()"
+            [options]="{
+              lineNumbers: true,
+              theme: 'eclipse',
+              mode: 'markdown',
+              mime: 'text/x-pgsql',
+              placeholder: translate.instant('EMAIL-EDITOR.DATA-SOURCE.LABELS.SQL-PLACEHOLDER'),
+              readOnly: readOnlyQuery
+            }"
+          ></ngx-codemirror>
+        </div>
+
+        <mat-error *ngIf="showMessage"> {{ errorMessage }}</mat-error>
+        <mat-error *ngIf="!itemForm.get('sqlQuery').valid && itemForm.get('sqlQuery').touched">
+          {{ 'EMAIL-GENERAL.ERRORS.REQUIRED' | translate }}</mat-error
+        >
+      </form>
+
+      <!--<div class="table-container">
+			<mat-table matSort [dataSource]="metaList" class="mat-elevation-z8">
+				<ng-container matColumnDef="columnName">
+					<mat-header-cell mat-sort-header *matHeaderCellDef>
+						{{'EMAIL-EDITOR.DATA-SOURCE.FIELDS.COLUMN-NAME' | translate}}</mat-header-cell>
+					<mat-cell *matCellDef="let item">
+						{{ item.metaColumn }}
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="dataType">
+					<mat-header-cell mat-sort-header *matHeaderCellDef>
+						{{'EMAIL-EDITOR.DATA-SOURCE.FIELDS.DATA-TYPE' | translate}}</mat-header-cell>
+					<mat-cell *matCellDef="let item">
+						{{ item.metaColumnDataType }}
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+			</mat-table>
+		</div>-->
+
+      <div class="association-div full-width">
+        <div class="fc-row">
+          <div class="fc-col-sm-12 fc-text-right">
+            <button name="back" mat-raised-button color="basic" [routerLink]="['/email/datasource']">
+              {{ 'EMAIL-GENERAL.ACTIONS.CANCEL' | translate }}
+            </button>
+            <button
+              mat-raised-button
+              [disabled]="itemForm.get('sqlQuery').invalid"
+              (click)="previewData()"
+              type="button"
+            >
+              {{ 'EMAIL-GENERAL.ACTIONS.EXECUTE' | translate }}
+            </button>
+            <button
+              name="save"
+              mat-raised-button
+              color="primary"
+              (click)="itemNgForm.ngSubmit.emit()"
+              *ngIf="showSave && previewAvailable"
+              [disabled]="!itemForm.valid || !IsUpdatePermission || loading"
+            >
+              {{ 'EMAIL-GENERAL.ACTIONS.SAVE' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+    </mat-card-content>
+  </mat-card>
+</div>

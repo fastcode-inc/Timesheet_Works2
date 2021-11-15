@@ -1,0 +1,367 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+        <changeSet author="fastCode, Inc" id="000000-000001">
+        <createTable tableName="permission">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="permission_pkey"/>
+            </column>
+            <column name="display_name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+         <addUniqueConstraint columnNames="name" 
+        	constraintName="uk_permission_name" 
+        	tableName="permission"/>
+        
+    </changeSet>
+    <changeSet author="fastCode, Inc" id="000000-000002">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="role_pkey"/>
+            </column>
+            <column name="display_name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+         <addUniqueConstraint columnNames="name" 
+        	constraintName="uk_role_name" 
+        	tableName="role"/>
+    </changeSet>
+   
+    <changeSet author="fastCode, Inc" id="000000-000003">
+        <createTable tableName="rolepermission">
+            <column name="permission_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rolepermission_pkey"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rolepermission_pkey"/>
+            </column>
+  
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="permission_id"
+         	baseTableName="rolepermission" 
+         	constraintName="fk_rolepermission_permission_id" 
+         	deferrable="false" 
+         	initiallyDeferred="false"
+         	onDelete="CASCADE" 
+         	onUpdate="NO ACTION" 
+         	referencedColumnNames="id"
+         	referencedTableName="permission" 
+         	validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="role_id"
+         	baseTableName="rolepermission" 
+         	constraintName="fk_rolepermission_role_id"
+          	deferrable="false" 
+          	initiallyDeferred="false" 
+          	onDelete="CASCADE" 
+          	onUpdate="NO ACTION" 
+          	referencedColumnNames="id" 
+          	referencedTableName="role" 
+          	validate="true"/>
+        
+    </changeSet>
+    <changeSet author="fastCode, Inc" id="000000-000007">
+        <createTable tableName="usersrole">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="usersrole_pkey"/>
+            </column>
+  			<column name="users_id" type="bigint">
+  			 <constraints nullable="false" primaryKey="true" primaryKeyName="usersrole_pkey"/>
+            </column>
+        </createTable>
+        
+  		<addForeignKeyConstraint baseColumnNames="users_id"
+        baseTableName="usersrole"
+        constraintName="fk_usersrole_users"
+  		deferrable="false" initiallyDeferred="false" 
+        onDelete="CASCADE" onUpdate="NO ACTION" 
+        referencedColumnNames="id"
+        referencedTableName="users"
+        validate="true"/>
+  		
+        
+        <addForeignKeyConstraint baseColumnNames="role_id" 
+        baseTableName="usersrole"
+        constraintName="fk_usersrole_role_id"
+        deferrable="false" initiallyDeferred="false" 
+        onDelete="CASCADE" onUpdate="NO ACTION" 
+        referencedColumnNames="id" 
+        referencedTableName="role"
+        validate="true"/>
+    </changeSet>
+    
+    <changeSet author="fastCode, Inc" id="000000-000008">
+        <createTable tableName="userspermission">
+            <column name="permission_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="userspermission_pkey"/>
+            </column>
+  			<column name="users_id" type="bigint">
+  			<constraints nullable="false" primaryKey="true" primaryKeyName="userspermission_pkey"/>
+            </column>
+            <column name="revoked" type="BOOLEAN"/>
+            
+        </createTable>
+        
+        
+        <addForeignKeyConstraint baseColumnNames="users_id "
+        baseTableName="userspermission"
+        constraintName="fk_userspermission_users"
+  		deferrable="false" initiallyDeferred="false" 
+        onDelete="CASCADE" onUpdate="NO ACTION" 
+        referencedColumnNames="id "
+        referencedTableName="users"
+        validate="true"/>
+  		
+        
+        <addForeignKeyConstraint baseColumnNames="permission_id" 
+        baseTableName="userspermission"
+        constraintName="fk_userspermission_permission_id"
+        deferrable="false" initiallyDeferred="false" 
+        onDelete="CASCADE" onUpdate="NO ACTION" 
+        referencedColumnNames="id" 
+        referencedTableName="permission"
+        validate="true"/>
+    </changeSet>
+     <changeSet author="fastCode, Inc" id="000000-000009">
+        <createTable tableName="userspreference">
+  			<column name="id" type="bigint">
+  			 <constraints nullable="false" primaryKey="true" primaryKeyName="userspreference_pkey"/>
+            </column>
+            <column name="language" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="theme" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="id "
+        baseTableName="userspreference"
+        constraintName="fkr_userspreference" deferrable="false" initiallyDeferred="false"
+        onDelete="CASCADE" onUpdate="NO ACTION" 
+        referencedColumnNames="id "
+        referencedTableName="users"
+        validate="true"/>
+       
+    </changeSet>
+     <changeSet author="fastCode, Inc" id="000000-000010">
+        <createTable tableName="tokenverification">
+  			<column name="users_id" type="bigint">
+  			 <constraints nullable="false" primaryKey="true" primaryKeyName="tokenverification_pkey"/>
+            </column>
+            <column name="token_type" type="VARCHAR(20)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tokenverification_pkey"/>
+            </column>
+            
+            <column name="expiration_time" type="TIMESTAMP"/>
+            <column name="token" type="VARCHAR(512)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="users_id "
+        baseTableName="tokenverification" 
+        constraintName="fk_tokenverification_users" deferrable="false" initiallyDeferred="false" 
+        onDelete="CASCADE" onUpdate="NO ACTION" 
+        referencedColumnNames="id"
+        referencedTableName="users"
+        validate="true"/>
+    
+    </changeSet>
+      <changeSet author="fastCode, Inc" id="000000-000011">
+        <createTable tableName="jwt_entity">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="jwt_entity_pkey"/>
+            </column>
+            <column name="authorization_token" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authentication_token" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+ 
+     
+   <!--  Email tables -->
+   
+        <changeSet author="fastCode, Inc" id="master-entity">
+        <createTable tableName="master_entity">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="master_entity_pkey"/>
+            </column>
+            <column name="master_name" type="VARCHAR(255)"/>
+            <column name="master_value" type="VARCHAR(255)"/>
+        </createTable>
+    	</changeSet>
+    
+        <changeSet author="fastCode, Inc" id="email">
+        <createTable tableName="email">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="email_pkey"/>
+            </column>
+            <column name="active" type="BOOLEAN"/>
+            <column name="attachmentpath" type="VARCHAR(256)"/>
+            <column name="bcc" type="VARCHAR(256)"/>
+            <column name="category" type="VARCHAR(256)"/>
+            <column name="cc" type="VARCHAR(256)"/>
+            <column name="content_html" type="VARCHAR(32768)"/>
+            <column name="content_json" type="VARCHAR(32768)"/>
+            <column name="description" type="VARCHAR(512)"/>
+            <column name="subject" type="VARCHAR(256)"/>
+            <column name="template_name" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        </changeSet>
+    
+       <changeSet author="fastCode, Inc" id="email-template-history">
+        <createTable tableName="email_template_history">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="email_template_history_pkey"/>
+            </column>
+            <column name="active" type="BOOLEAN"/>
+            <column name="attachmentpath" type="VARCHAR(256)"/>
+            <column name="bcc" type="VARCHAR(256)"/>
+            <column name="category" type="VARCHAR(256)"/>
+            <column name="cc" type="VARCHAR(256)"/>
+            <column name="content_html" type="VARCHAR(32768)"/>
+            <column name="content_json" type="VARCHAR(32768)"/>
+            <column name="description" type="VARCHAR(512)"/>
+            <column name="subject" type="VARCHAR(256)"/>
+            <column name="template_name" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+        <changeSet author="fastCode, Inc" id="email-variable">
+        <createTable tableName="email_variable">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="email_variable_pkey"/>
+            </column>
+            <column name="default_value" type="VARCHAR(100)"/>
+            <column name="merge_type" type="VARCHAR(50)"/>
+            <column name="property_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="property_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fastCode, Inc" id="email-variable-type">
+        <createTable tableName="email_variable_type">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="email_variable_type_pkey"/>
+            </column>
+            <column name="variable_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addUniqueConstraint columnNames="variable_type" constraintName="uk_email_variable_type_tb_variable_type" tableName="email_variable_type"/>
+    </changeSet>
+   
+    <changeSet author="fastCode, Inc" id="data-source">
+        <createTable tableName="data_source">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="data_source_pkey"/>
+            </column>
+            <column name="creation" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="name" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sql_query" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_template" type="BIGINT"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="email_template" baseTableName="data_source" 
+        constraintName="fk_email_template_data_source" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="email" validate="true"/>
+    
+    </changeSet>
+    
+    <changeSet author="fastCode, Inc" id="data-source-meta">
+        <createTable tableName="data_source_meta">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="data_source_meta_pkey"/>
+            </column>
+            <column name="meta_column" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="meta_column_data_type" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_source_entity" type="BIGINT"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="data_source_entity" baseTableName="data_source_meta" 
+        constraintName="fk_data_source_entity_data_source_meta" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="data_source" validate="true"/>
+   
+    </changeSet>
+
+    <changeSet author="fastCode, Inc" id="email-merge-field">
+        <createTable tableName="email_merge_field">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="email_merge_field_pkey"/>
+            </column>
+            <column name="email_template" type="BIGINT"/>
+            <column name="merge_field" type="BIGINT"/>
+        </createTable>
+        
+          <addForeignKeyConstraint baseColumnNames="email_template" baseTableName="email_merge_field" 
+          constraintName="fk_email_template_email_merge_field" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="email" validate="true"/>
+   		  
+   		  <addForeignKeyConstraint baseColumnNames="merge_field" baseTableName="email_merge_field" 
+   		  constraintName="fk_merge_field_email_merge_field" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="email_variable" validate="true"/>
+   
+    </changeSet>
+
+ 
+    <changeSet author="fastCode, Inc" id="email-template-mapping-entity">
+        <createTable tableName="email_template_mapping_entity">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="email_template_mapping_entity_pkey"/>
+            </column>
+            <column name="creation" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="data_source_entity" type="BIGINT"/>
+            <column name="data_source_meta_entity" type="BIGINT"/>
+            <column name="email_template_entity" type="BIGINT"/>
+            <column name="merge_field" type="BIGINT"/>
+        </createTable>
+        
+         <addForeignKeyConstraint baseColumnNames="email_template_entity" baseTableName="email_template_mapping_entity" 
+         constraintName="fk_email_template_entity_email_template_mapping_entity" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="email" validate="true"/>      
+       
+        <addForeignKeyConstraint baseColumnNames="data_source_entity" baseTableName="email_template_mapping_entity" 
+        constraintName="fk_datasource_entity_email_template_mapping_entity" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="data_source" validate="true"/>
+       
+        <addForeignKeyConstraint baseColumnNames="data_source_meta_entity" baseTableName="email_template_mapping_entity"
+         constraintName="fk_datasource_meta_entity_email_template_mapping_entity" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="data_source_meta" validate="true"/>
+  		
+  		<addForeignKeyConstraint baseColumnNames="merge_field" baseTableName="email_template_mapping_entity" 
+  		constraintName="fk_merge_field_email_template_mapping_entity" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="email_variable" validate="true"/>
+       
+    </changeSet>
+
+
+</databaseChangeLog>

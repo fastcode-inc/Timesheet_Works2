@@ -1,0 +1,65 @@
+<div class="top-breadcrumb">
+  <h1 class="template-title">{{ title }}</h1>
+  <div class="fc-row">
+    <div class="fc-col-sm-12">
+      <ul class="breadcrumb">
+        <li>
+          <a [routerLink]="['/dashboard']"><i class="material-icons"> home </i> &nbsp;Home</a>
+        </li>
+        <li>
+          <a (click)="back()">{{ title }}</a>
+        </li>
+        <li>
+          <a>{{ idParam }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<mat-card class="card">
+  <mat-card-content>
+    <fc-fields-extended
+      [fields]="fields"
+      [itemForm]="itemForm"
+      [parentAssociations]="parentAssociations"
+      (onPickerScroll)="pickerScroll($event)"
+      (onSelectAssociation)="selectAssociation($event)"
+      (onDownloadFile)="downloadFile($event)"
+    >
+    </fc-fields-extended>
+    <br />
+    <br />
+
+    <div class="association-div full-width">
+      <div class="fc-row">
+        <div class="fc-col-sm-6">
+          <button
+            mat-button
+            *ngFor="let association of childAssociations"
+            (click)="openDetails(association)"
+            class="btn btn-link"
+          >
+            {{ association.label }}&nbsp;<mat-icon>link</mat-icon>
+          </button>
+        </div>
+        <div class="fc-col-sm-6 fc-text-right">
+          <button name="back" mat-raised-button color="basic" (click)="back()">
+            {{ 'GENERAL.ACTIONS.CANCEL' | translate }}
+          </button>
+          <button
+            name="save"
+            mat-raised-button
+            color="primary"
+            [disabled]="!itemForm.valid || loading || !IsUpdatePermission"
+            (click)="submit()"
+          >
+            {{ 'GENERAL.ACTIONS.SAVE' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+  </mat-card-content>
+</mat-card>

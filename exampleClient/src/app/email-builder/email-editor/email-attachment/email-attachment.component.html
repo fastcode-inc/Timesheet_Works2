@@ -1,0 +1,25 @@
+<div>
+  <div>
+    <span class="text-level">Attachments</span>&nbsp;&nbsp;
+    <input
+      style="width: 95px"
+      title=""
+      id="file"
+      type="file"
+      multiple
+      (dragover)="onFileChange($event)"
+      (change)="onFileChange($event)"
+    />
+  </div>
+  <div>
+    <li class="attatched_file" *ngFor="let file of files">
+      {{ file.name }}&nbsp;
+      <span class="del_btn">
+        <button class="addIcon" mat-icon-button color="warn" (click)="removeFile(file)">
+          <mat-icon aria-label="Merge Field">delete</mat-icon>
+        </button>
+      </span>
+    </li>
+  </div>
+  <br /><br />
+</div>

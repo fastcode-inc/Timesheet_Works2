@@ -1,0 +1,39 @@
+<div>
+  <mat-toolbar class="action-tool-bar" color="primary">
+    <button mat-button class="left" (click)="onCancel()">{{ 'GENERAL.ACTIONS.CANCEL' | translate }}</button>
+    <span class="middle">{{ 'PICKER.TITLE' | translate: { title: title } }}</span>
+
+    <button mat-button class="right" (click)="onOk()">{{ 'GENERAL.ACTIONS.OK' | translate }}</button>
+  </mat-toolbar>
+
+  <form class="search-form">
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Search" (input)="onSearchChange($event.target.value)" />
+    </mat-form-field>
+  </form>
+
+  <mat-dialog-content (onScroll)="onTableScroll()" appVirtualScroll>
+    <mat-selection-list *ngIf="!data.IsSingleSelection">
+      <mat-list-option *ngFor="let item of items" [value]="item">
+        <h4 mat-line>
+          <span>{{ item[displayField] }}</span>
+          <mat-icon [customToolTip]="item">info</mat-icon>
+        </h4>
+        <mat-divider></mat-divider>
+      </mat-list-option>
+    </mat-selection-list>
+
+    <mat-list *ngIf="data.IsSingleSelection">
+      <mat-radio-group [(ngModel)]="selectedItem">
+        <mat-list-item *ngFor="let item of items" (click)="selectedItem = item" matRipple>
+          <span class="single-selection-text">{{ item[displayField] }}</span>
+          <span class="icon-container">
+            <mat-icon class="dropdown-icon" [customToolTip]="item">info</mat-icon>
+            <mat-radio-button [value]="item"> </mat-radio-button>
+          </span>
+          <mat-divider [inset]="true"></mat-divider>
+        </mat-list-item>
+      </mat-radio-group>
+    </mat-list>
+  </mat-dialog-content>
+</div>

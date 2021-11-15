@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+         
+		<changeSet author="fastCode, Inc" id="userspreference100">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="userspreference" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="userspreference">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="task101">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="task" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="task">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="jwt_entity102">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="jwt_entity" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="jwt_entity">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="timeofftype103">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="timeofftype" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="timeofftype">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="customer104">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="customer" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="customer">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="timesheet105">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="timesheet" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="timesheet">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="rolepermission106">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="rolepermission" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="rolepermission">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="users107">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="users" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="users">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="role108">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="role" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="role">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="tokenverification109">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="tokenverification" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="tokenverification">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="project110">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="project" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="project">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="usertask111">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="usertask" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="usertask">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="permission112">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="permission" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="permission">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="usersrole113">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="usersrole" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="usersrole">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="timesheetstatus114">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="timesheetstatus" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="timesheetstatus">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="timesheetdetails115">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="timesheetdetails" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="timesheetdetails">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+	<changeSet author="fastCode, Inc" id="userspermission116">
+	    <preConditions onFail="MARK_RAN">
+        	<tableExists tableName="userspermission" schemaName="timesheet"/>
+        </preConditions>
+	    <addColumn tableName="userspermission">
+	    	<column name="versiono" type="BIGINT" defaultValue="0">
+	      		<constraints nullable="false"/>
+			</column>
+	   	</addColumn>
+	</changeSet>
+         
+</databaseChangeLog>

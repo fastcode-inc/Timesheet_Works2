@@ -1,0 +1,85 @@
+<div class="list-container" (onScroll)="tableScroll()" appVirtualScroll>
+  <div class="top-breadcrumb">
+    <h1 class="template-title">{{ title }}</h1>
+    <div class="fc-row">
+      <div class="fc-col-md-8">
+        <ul class="breadcrumb">
+          <li>
+            <a [routerLink]="['/dashboard']"><i class="material-icons"> home </i> &nbsp;Home</a>
+          </li>
+          <li>
+            <a>{{ title }}</a>
+          </li>
+          <li *ngIf="selectedAssociation" (click)="back()">
+            <span *ngIf="selectedAssociation.associatedObj">
+              {{ selectedAssociation.label }}:
+              {{ selectedAssociation.associatedObj[selectedAssociation.referencedDescriptiveField] }}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="fc-col-md-4 fc-text-right">
+        <button name="add" mat-raised-button color="primary" [disabled]="!IsCreatePermission" (click)="addNew()">
+          <mat-icon>add_circle_outline</mat-icon>
+          &nbsp;{{ 'GENERAL.ACTIONS.ADD' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <mat-card>
+    <app-list-filters [columnsList]="selectedColumns" (onSearch)="search($event)"></app-list-filters>
+    <div class="table-container">
+      <mat-table matSort [dataSource]="items" class="mat-elevation-z8">
+        <ng-container *ngFor="let column of selectedColumns">
+          <ng-container *ngIf="column.column != 'actions'" matColumnDef="{{ column.column }}">
+            <mat-header-cell mat-sort-header *matHeaderCellDef [disabled]="!column.sort">
+              {{ getFieldLabel(column.label) }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="column.type != 'Date' && column.type != 'DateTime'">
+                {{ element[column.column] }}
+              </ng-container>
+              <ng-container *ngIf="column.type == 'Date'">
+                {{ element[column.column] | date: defaultDateFormat }}
+              </ng-container>
+              <ng-container *ngIf="column.type == 'DateTime'">
+                {{ element[column.column] | date: defaultDateTimeFormat }}
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container *ngIf="column.column == 'actions'" matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> {{ getFieldLabel('Actions') }}</mat-header-cell>
+            <mat-cell *matCellDef="let item" (click)="$event.stopPropagation()">
+              <button
+                name="edit"
+                mat-icon-button
+                aria-label="Example icon-button with a heart icon text-dangger"
+                matTooltip="{{ 'GENERAL.ACTIONS.OPEN-DETAILS' | translate }}"
+                (click)="openDetails(item)"
+              >
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              <button
+                name="delete"
+                mat-icon-button
+                color="warn"
+                aria-label="Example icon-button with a heart icon text-dangger"
+                matTooltip="{{ 'GENERAL.ACTIONS.DELETE' | translate }}"
+                [disabled]="!IsDeletePermission"
+                (click)="delete(item)"
+              >
+                <mat-icon color="warn">delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+    <section class="small-spinner-container" *ngIf="isLoadingResults">
+      <mat-spinner></mat-spinner>
+    </section>
+  </mat-card>
+</div>

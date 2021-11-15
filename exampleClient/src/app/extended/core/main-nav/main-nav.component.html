@@ -1,0 +1,138 @@
+<mat-toolbar class="fc-tool-bar" color="primary" *ngIf="authenticationService.token">
+  <figure class="logo">
+    <img src="../../../../assets/images/logo.png" alt="logo" />
+  </figure>
+  <button mat-icon-button class="menu-button" type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()">
+    <i class="material-icons">menu</i>
+  </button>
+  <figure class="mob-logo">
+    <img src="../../../../assets/images/logo.png" alt="logo" />
+  </figure>
+  <span class="example-spacer" *ngIf="!(isSmallDevice$ | async)"></span>
+  <span>
+    <span [matMenuTriggerFor]="menu" class="profile-menu" *ngIf="authenticationService.token">
+      <mat-icon>account_circle</mat-icon>
+      <span>{{ username }}</span>
+    </span>
+    <mat-menu #menu="matMenu">
+      <span *ngFor="let theme of themes">
+        <button mat-menu-item (click)="changeTheme(theme, true)">{{ theme }}</button>
+      </span>
+      <button mat-menu-item routerLink="/update-password">
+        <mat-icon class="menu-item">vpn_key</mat-icon>
+        &nbsp; Update Password
+      </button>
+      <button mat-menu-item routerLink="/update-profile">
+        <mat-icon class="menu-item">person</mat-icon>
+        &nbsp; Update Profile
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon color="warn" class="menu-item">power_settings_new</mat-icon>
+        &nbsp; Logout
+      </button>
+    </mat-menu>
+  </span>
+</mat-toolbar>
+<mat-sidenav-container
+  [ngClass]="{ 'sidenav-container': authenticationService.token, 'full-page': !authenticationService.token }"
+>
+  <mat-sidenav
+    *ngIf="authenticationService.token"
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isSmallDevice$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isSmallDevice$ | async) ? 'over' : 'side'"
+    [opened]="!(isSmallDevice$ | async)"
+  >
+    <mat-nav-list class="nav-list">
+      <a mat-list-item class="sidenav-list-item" routerLinkActive="active" [routerLink]="['/dashboard']"
+        ><i class="material-icons">home</i> &nbsp;{{ 'MainNav.Home' | translate }}</a
+      >
+
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header class="subnav-header">
+          <i class="material-icons"> dvr </i> &nbsp;{{ 'MainNav.Entities' | translate }}
+        </mat-expansion-panel-header>
+
+        <mat-nav-list class="subnav">
+          <ng-container *ngFor="let entity of entityList">
+            <a
+              *ngIf="permissions[entity]"
+              mat-list-item
+              class="mat-sub-list-item"
+              [class.active]="isActive(entity)"
+              [routerLink]="[entity]"
+            >
+              {{ entity }}
+            </a>
+          </ng-container>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="expansion-panel" *ngIf="permissions['showTools']">
+        <mat-expansion-panel-header class="subnav-header">
+          <i class="material-icons"> build </i> &nbsp;{{ 'MainNav.Tools' | translate }}
+        </mat-expansion-panel-header>
+
+        <mat-nav-list class="subnav">
+          <mat-expansion-panel class="expansion-panel" *ngIf="permissions['showEmail']">
+            <mat-expansion-panel-header class="subnav-header">
+              {{ 'MainNav.Email.Title' | translate }}
+            </mat-expansion-panel-header>
+
+            <mat-nav-list class="subnav">
+              <a mat-list-item class="mat-sub-list-item" *ngIf="permissions['email']" routerLink="email/emailtemplate"
+                >{{ 'MainNav.Email.EmailTemplate' | translate }}
+              </a>
+              <a
+                mat-list-item
+                class="mat-sub-list-item"
+                *ngIf="permissions['emailvariable']"
+                routerLink="email/emailvariable"
+                >{{ 'MainNav.Email.EmailVariables' | translate }}
+              </a>
+              <a mat-list-item class="mat-sub-list-item" *ngIf="permissions['datasource']" routerLink="email/datasource"
+                >{{ 'MainNav.Email.DataSource' | translate }}
+              </a>
+            </mat-nav-list>
+          </mat-expansion-panel>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header class="subnav-header">
+          <i class="material-icons"> account_box </i> &nbsp;{{ 'MainNav.Administration' | translate }}
+        </mat-expansion-panel-header>
+
+        <mat-expansion-panel class="expansion-panel">
+          <mat-expansion-panel-header class="subnav-header">
+            {{ 'MainNav.AccessMgmt' | translate }}
+          </mat-expansion-panel-header>
+
+          <mat-nav-list class="subnav">
+            <ng-container *ngFor="let entity of authEntityList">
+              <a
+                *ngIf="permissions[entity]"
+                mat-list-item
+                class="mat-sub-list-item"
+                [class.active]="isActive('url')"
+                [routerLink]="[entity]"
+              >
+                {{ entity }}
+              </a>
+            </ng-container>
+          </mat-nav-list>
+        </mat-expansion-panel>
+      </mat-expansion-panel>
+      <a mat-list-item class="sidenav-list-item" routerLink="swagger-ui">
+        <i class="material-icons"> settings </i> &nbsp;{{ 'MainNav.API' | translate }}</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content #navContent class="fc-sidenav-content">
+    <!-- main content container start  -->
+    <router-outlet></router-outlet>
+    <!-- main content container Ends -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

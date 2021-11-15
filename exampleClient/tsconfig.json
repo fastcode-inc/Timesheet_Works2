@@ -1,0 +1,27 @@
+{
+  "angularCompilerOptions": {
+    "enableIvy": true
+ },
+  "compileOnSave": false,
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "sourceMap": true,
+    "module": "es2020",
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "declaration": false,
+    "outDir": "./dist/out-tsc",
+    "target": "es2015",
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "moduleResolution": "node"
+  }
+}

@@ -1,0 +1,15 @@
+id,variable_type
+1,Text
+2,Multi-line Text
+3,Date
+4,Number
+5,Email
+6,Phone
+7,Percentage
+8,Image
+9,Hyperlink
+10,Clickable Image
+11,Currency
+12,List
+13,List of Images
+

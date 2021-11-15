@@ -1,0 +1,68 @@
+quill-editor {
+  display: block;
+}
+
+.addIcon {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+
+  &_list {
+    display: none;
+  }
+}
+
+.addIcon:hover {
+  .addIcon_list {
+    display: block;
+    position: absolute;
+    width: 300px;
+    background-color: #ffffff;
+    text-align: left;
+    top: 20px;
+    right: 0;
+    max-height: 150px;
+    overflow-y: scroll;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    &_item {
+      display: block;
+      line-height: 1.6;
+      padding: 8px;
+      font-size: 18px;
+      color: rgba(0, 0, 0, 0.87);
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+}
+
+.addIcon.active {
+  .addIcon_list {
+    display: block;
+    position: absolute;
+    width: 300px;
+    background-color: #ffffff;
+    text-align: left;
+    top: 20px;
+    right: 0;
+    max-height: 150px;
+    overflow-y: scroll;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+
+    &_item {
+      display: block;
+      line-height: 1.6;
+      padding: 8px;
+      font-size: 18px;
+      color: rgba(0, 0, 0, 0.87);
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+}

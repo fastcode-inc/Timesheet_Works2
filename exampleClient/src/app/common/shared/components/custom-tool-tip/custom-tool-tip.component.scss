@@ -1,0 +1,15 @@
+.tooltip-container {
+  border: 1px solid;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  min-width: 100px;
+  overflow: visible;
+  max-height: 400px;
+  min-height: 100px;
+  word-break: break-word;
+  padding: 5px;
+}

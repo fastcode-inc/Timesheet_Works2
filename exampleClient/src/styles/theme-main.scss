@@ -1,0 +1,10 @@
+// mixins.scss is a common file for every theme class
+.default-theme {
+  @import 'default-theme.scss';
+  @import 'mixins.scss';
+}
+
+.alt-theme {
+  @import 'alt-theme.scss';
+  @import 'mixins.scss';
+}

@@ -1,0 +1,52 @@
+@import '~@angular/material/_theming';
+//@import './node_modules/@angular/material/_theming.scss';
+@mixin main-nav-mixin($theme, $fontConfig) {
+  $fc-primary-color: map-get($theme, primary);
+  $fc-primary-color-light: map-get($theme, primary);
+  $fc-accent-color: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .mat-sidenav .mat-drawer {
+    background-color: mat-color($fc-primary-color) !important;
+  }
+
+  .nav-list.mat-nav-list.mat-list-base .mat-expansion-panel {
+    background: mat-color($fc-primary-color) !important;
+    color: mat-color($background, background);
+  }
+
+  .sidenav {
+    background: mat-color($fc-primary-color) !important;
+  }
+  .sidenav span.mat-content {
+    color: mat-color($background, background) !important;
+  }
+  .mat-nav-list .mat-list-item {
+    color: mat-color($background, background) !important;
+  }
+  .mat-content {
+    // color: white;
+    // color: mat-color($foreground,text);
+    color: mat-color($background, background) !important;
+  }
+  .sidebar-toggle-btn {
+    color: mat-color($fc-primary-color);
+  }
+  .mat-drawer-content {
+    // background: #f1f1f1;
+    background: mat-color($background, background);
+  }
+  .sidenav-list-item {
+    font-family: mat-font-family($fontConfig, body-1);
+  }
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    background-color: mat-color($fc-primary-color);
+    color: mat-color($background, background);
+    top: 0;
+  }
+  .active {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+  }
+}

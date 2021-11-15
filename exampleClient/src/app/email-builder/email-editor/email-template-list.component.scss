@@ -1,0 +1,12 @@
+@import 'src/styles/base.scss';
+.container {
+  margin: $fc-margin3;
+  height: 600px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  // height: 400px;
+  // bottom: $fc-row-height5;
+}
