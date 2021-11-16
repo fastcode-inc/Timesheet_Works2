@@ -5,5 +5,3 @@ ports:
   - port: 4200
     onOpen: open-preview
     visibility: public
-  - port: 5555
-    onOpen: ignore
