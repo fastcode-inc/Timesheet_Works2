@@ -3,5 +3,4 @@ image:
 
 ports:
   - port: 4200
-    onOpen: open-preview
     visibility: public
