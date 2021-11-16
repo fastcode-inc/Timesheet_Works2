@@ -6,4 +6,5 @@ ports:
   - port: 5555
     onOpen: ignore
   - port: 4200
-    onOpen: ignore
+    visibility: public
+    onOpen: open-browser
