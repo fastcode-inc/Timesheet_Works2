@@ -3,4 +3,5 @@ image:
 
 #exposed back-end API port
 ports:
-  -port: 5555
+  - port: 5555
+    onOpen: ignore
