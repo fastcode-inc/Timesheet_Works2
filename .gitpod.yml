@@ -4,3 +4,4 @@ image:
 ports:
   - port: 4200
     visibility: public
+  - port: 5555
